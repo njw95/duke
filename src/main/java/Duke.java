@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -20,13 +21,20 @@ public class Duke {
             myCommand = sc.nextLine();
             if(myCommand.equals("bye"))break;
             else if(myCommand.equals("list")){
-                mylist.forEach(System.out::println);
+                printList(mylist);
             }
-            else {
+            else { //list
                 mylist.add(myCommand);
                 System.out.println("added: "+myCommand);
             }
         }
         System.out.println("Bye. Hope to see you again soon!");
     }
+
+    public static void printList(List<String> mylist){
+        for(int i = 0; i < mylist.size(); i++) {
+            System.out.println(i+1 + ". " + mylist.get(i));
+        }
+    }
 }
+
