@@ -26,16 +26,10 @@ public class Duke {
                 if (myList.isEmpty()) System.out.println("List is empty."); //list empty
                 else { //list has items
                     int counter = 0;
-                    System.out.println("This is your current list.");
+                    System.out.println("Here are the tasks in your list:");
                     for (Task task : myList) { //for all task in myList, traverse and print
-                        // [0] is the taskName, [1] is the symbol
                         counter++;
-                        if(task.letterSymbol.equals("T"))
-                            System.out.println(counter + ".[" + task.letterSymbol + "] " + "["+task.getStatusIcon()+"] "+task.description);
-                        else {
-                            String[] taskDatesplit = task.date.split("\\s", 2); //split "by day/full date"
-                            System.out.println(counter + ".[" + task.letterSymbol + "] " + "[" + task.getStatusIcon() + "] " + task.description + " (" + taskDatesplit[0] + ": " + taskDatesplit[1]+")");
-                        }
+                        System.out.println(counter+"."+task.toString());
                     }
                 }
             }
@@ -47,30 +41,30 @@ public class Duke {
             }
             else if(myInstruction.contains("todo")){
                 String[] words = myInstruction.split("\\s",2);
-                Task newToDoTask = new Task(words[1],"T");
+                ToDo newToDoTask = new ToDo(words[1]); //pass taskName as description
                 myList.add(newToDoTask);
                 System.out.println("Got it. I've added this task:");
-                System.out.println("["+ newToDoTask.letterSymbol+"]"+"["+newToDoTask.getStatusIcon()+"] "+words[1]);
+                System.out.println(newToDoTask.toString());
                 System.out.println("Now you have "+myList.size()+" tasks in the list.");
             }
             else if(myInstruction.contains("deadline")){
                 String[] words = myInstruction.split("\\s",2); //"deadline" and "instruction /by day"
                 String[] TaskDesc = words[1].split("/",2); //"instruction" and "by day/full date"
                 String[] TaskDate = TaskDesc[1].split("\\s",2); //"by" and "day"
-                Task newDeadlineTask = new Task(TaskDesc[0],"D",TaskDesc[1]);
+                Deadline newDeadlineTask = new Deadline(TaskDesc[0],TaskDate[1]);
                 myList.add(newDeadlineTask);
                 System.out.println("Got it. I've added this task:");
-                System.out.println("["+ newDeadlineTask.letterSymbol+"]"+"["+newDeadlineTask.getStatusIcon()+"] "+TaskDesc[0]+"("+TaskDate[0]+": "+TaskDate[1]+")");
+                System.out.println(newDeadlineTask.toString());
                 System.out.println("Now you have "+myList.size()+" tasks in the list.");
             }
             else if(myInstruction.contains("event")){
                 String[] words = myInstruction.split("\\s",2); //"event" and "instruction /by day"
                 String[] TaskDesc = words[1].split("/",2); //"instruction" and "at day/full date"
                 String[] TaskDate = TaskDesc[1].split("\\s",2); //"by" and "day"
-                Task newEventTask = new Task(TaskDesc[0],"E",TaskDesc[1]);
+                Event newEventTask = new Event(TaskDesc[0],TaskDate[1]);
                 myList.add(newEventTask);
                 System.out.println("Got it. I've added this task:");
-                System.out.println("["+ newEventTask.letterSymbol+"]"+"["+newEventTask.getStatusIcon()+"] "+TaskDesc[0]+" ("+TaskDate[0]+": "+TaskDate[1]+")");
+                System.out.println(newEventTask.toString());
                 System.out.println("Now you have "+myList.size()+" tasks in the list.");
             }
             else { //Normal adding no longer works without proper instruction

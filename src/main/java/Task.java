@@ -1,20 +1,11 @@
 public class Task {
     protected String description;
-    protected String letterSymbol;
     protected String date;
     protected boolean isDone;
 
-    public Task(String description, String letterSymbol) {
+    public Task(String description) { //handling of letterSymbol and dates to be done in respective classes.
         this.description = description;
         this.isDone = false;
-        this.letterSymbol = letterSymbol; //T,D, and E
-    }
-
-    public Task(String description, String letterSymbol, String date) {
-        this.description = description;
-        this.isDone = false;
-        this.letterSymbol = letterSymbol; //T,D, and E
-        this.date = date;
     }
 
     public String getStatusIcon() {
@@ -23,5 +14,9 @@ public class Task {
 
     public void markAsDone(){
         this.isDone = true;
+    }
+
+    public String toString(){
+        return this.description;
     }
 }
