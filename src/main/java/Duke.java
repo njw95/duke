@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-
+import java.io.FileWriter;
 
 public class Duke {
     public static void main(String[] args) {
@@ -12,9 +12,11 @@ public class Duke {
         System.out.println(logo);
         System.out.println("Hello I'm Duke\nWhat Can I do for you?");
 
-        ArrayList<Task> myList = new ArrayList<>();
+        ArrayList<Task>myList = new ArrayList<>();
 
         while (true) {
+            FileReading reader = new FileReading();
+            myList = reader.ReadFile();
             Scanner sc = new Scanner(System.in);
             String myInstruction = sc.nextLine();
             String[] words = myInstruction.split("\\s",2); //split into command todo,deadline,event,done then desc
@@ -43,9 +45,14 @@ public class Duke {
                     if ((words.length < 2) || (words[1].equals("")) || (Integer.parseInt(words[1]) - 1 > myList.size()))
                         throw new DukeException();
                     //if no error, proceed
+                    String prevData = myList.get(Integer.parseInt(words[1]) - 1).toTextData();
                     myList.get(Integer.parseInt(words[1]) - 1).markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("[" + myList.get(Integer.parseInt(words[1]) - 1).getStatusIcon() + "] " + myList.get(Integer.parseInt(words[1]) - 1).description);
+                    String currData = myList.get(Integer.parseInt(words[1]) - 1).toTextData();
+                    //Modify Duke.txt here, need to update the isDone
+                    FileWriting writer = new FileWriting();
+                    writer.ModifyFile(prevData,currData);
                 }
                 catch(DukeException e){ //catch the error if it was thrown above
                         e.incorrectInputFormat(DukeException.typesOfError.DONE);
@@ -61,6 +68,9 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newToDoTask.toString());
                     System.out.println("Now you have " + myList.size() + " tasks in the list.");
+                    //update Duke.txt here
+                    FileWriting writer = new FileWriting();
+                    writer.WriteFile(newToDoTask.toTextData(),true); //write using data text format
                 }
                 catch(DukeException e){
                     e.incorrectInputFormat(DukeException.typesOfError.TODO);
@@ -79,6 +89,10 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newDeadlineTask.toString());
                     System.out.println("Now you have " + myList.size() + " tasks in the list.");
+                    //update Duke.txt here
+                    FileWriting writer = new FileWriting();
+                    writer.WriteFile(newDeadlineTask.toTextData(),true); //write using data text format
+
                 } catch (DukeException e) {
                     e.incorrectInputFormat(DukeException.typesOfError.DEADLINE);
                 }
@@ -96,6 +110,9 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newEventTask.toString());
                     System.out.println("Now you have " + myList.size() + " tasks in the list.");
+                    //update Duke.txt here
+                    FileWriting writer = new FileWriting();
+                    writer.WriteFile(newEventTask.toTextData(),true);//write using data text format
                 } catch (DukeException e) {
                     e.incorrectInputFormat(DukeException.typesOfError.EVENT);
                 }
