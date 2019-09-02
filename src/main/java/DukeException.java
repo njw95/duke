@@ -20,10 +20,11 @@ public class DukeException extends Exception {
     public void incorrectInputFormat(typesOfError error) {
         switch(error) {
             case TODO: System.out.println("Missing/Incorrect format detected. Please use \"todo [insert task description]\"");break;
-            case DEADLINE: System.out.println("Missing/Incorrect format detected. Please use \"deadline [insert task description] /by [date/time]\"");break;
-            case EVENT: System.out.println("Missing/Incorrect format detected. Please use \"event [insert task description] /at [date/time]\"");break;
+            case DEADLINE: System.out.println("Missing/Incorrect format detected. Please use \"deadline [insert task description] /by [DD/MM/YYYY] [HHMM]\"");break;
+            case EVENT: System.out.println("Missing/Incorrect format detected. Please use \"event [insert task description] /at [DD/MM/YYYY] [HHMM]\"");break;
             case DONE: System.out.println("Missing/Incorrect format detected. Please use \"done [insert index of task]\"");break;
         }
+        System.out.println("Remember to ommit the [ ] brackets when you type your task description, date and time.");
     }
 }
 

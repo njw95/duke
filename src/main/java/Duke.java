@@ -79,12 +79,13 @@ public class Duke {
                     //check dateFormat
                     String[] dateFormat = sep_myInput[1].split("/by ");
                     if (dateFormat.length < 2) throw new DukeException();
-                    //if((dateFormat[1].equals(" ")) || (dateFormat[0].equals("")))throw new DukeException();
+                    Datentime dnt = new Datentime();
+                    dateFormat[1]=dnt.extractDnT(dateFormat[1]);
+                    if(dateFormat[1].equals("null")) throw new DukeException();
                     Deadline newDeadlineTask = new Deadline(dateFormat[0], dateFormat[1]);
                     myList.add(newDeadlineTask);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newDeadlineTask.toString());
-                    //System.out.println("[D][âœ˜] " + dateFormat[0] + "(by: " + dateFormat[1] + ")");
                     System.out.println("Now you have " + myList.size() + " tasks in the list.");
                     FileWriting writer = new FileWriting();
                     writer.WriteFile(newDeadlineTask.toText(), true);
@@ -98,12 +99,13 @@ public class Duke {
                     if (!sep_myInput[1].contains("/at")) throw new DukeException();
                     String[] dateFormat = sep_myInput[1].split("/at ");
                     if (dateFormat.length < 2) throw new DukeException();
-                    //if((dateFormat[1].equals(" ")) || (dateFormat[0].equals("")))throw new DukeException();//safeguard
+                    Datentime dnt = new Datentime();
+                    dateFormat[1]=dnt.extractDnT(dateFormat[1]);
+                    if(dateFormat[1].equals("null")) throw new DukeException();
                     Event newEventTask = new Event(dateFormat[0], dateFormat[1]);
                     myList.add(newEventTask);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newEventTask.toString());
-                    //System.out.println("[E][âœ˜] " + dateFormat[0] + "(at: " + dateFormat[1] + ")");
                     System.out.println("Now you have " + myList.size() + " tasks in the list.");
                     //Write to duke.txt
                     FileWriting writer = new FileWriting();
