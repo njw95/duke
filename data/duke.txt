@@ -1,0 +1,46 @@
+T | 1 | fly kite
+T | 1 | pk people
+D | 1 | homework | Thursday
+E | 1 | pk sara | Sunday
+
+
+
+
+T | 1 | pk roopert
+D | 1 | pk him | sunday
+E | 1 | bbq | CCK
+
+
+
+T | 1 | pk chaos ele
+D | 1 | chickaboo | sunday 9pm
+E | 1 | jollibee | my house LOL
+
+
+
+T | 1 | eat pikachu
+D | 1 | pikachu eat me | today
+E | 1 | hahaha | sunday
+
+
+
+T | 1 | play pokemon
+D | 1 | pokemon destroy | Sunday
+E | 1 | pokemon gym | Sunday
+
+
+
+T | 1 | pikachu my friend
+D | 1 | yoloswag | Sunday
+E | 1 | project akira | Tuesday
+
+
+
+
+
+
+T | 1 | pokemon 123
+D | 1 | sunday roast | Sunday
+E | 1 | project YOLOSWAG | my house
+
+
