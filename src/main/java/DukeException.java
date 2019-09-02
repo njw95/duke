@@ -3,12 +3,12 @@ public class DukeException extends Exception {
 
     //if list command but list is empty
     public void emptyList() {
-        System.out.println("☹ OOPS!!! The task list is empty. Please myInput some myList before using this command.");
+        System.out.println("☹OOPS!!! The task list is empty. Please input some item into list before using this command.");
     }
 
     //if command is invalid
     public void invalidInstruction() {
-        System.out.println("☹ OOPS!!! There is no support for such instruction.");
+        System.out.println("☹OOPS!!! There is no support for such instruction.");
     }
 
     enum typesOfError { //enumerate all types of error

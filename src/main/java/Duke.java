@@ -60,7 +60,7 @@ public class Duke {
                     myList.add(newToDoTask);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newToDoTask.toString());
-                    //System.out.println("[T][✘] " + sep_myInput[1]);
+                    //System.out.println("[T][âœ˜] " + sep_myInput[1]);
                     System.out.println("Now you have " + myList.size() + " task(s) in the list.");
                     //write to duke.txt
                     FileWriting writer = new FileWriting();
@@ -84,7 +84,7 @@ public class Duke {
                     myList.add(newDeadlineTask);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newDeadlineTask.toString());
-                    //System.out.println("[D][✘] " + dateFormat[0] + "(by: " + dateFormat[1] + ")");
+                    //System.out.println("[D][âœ˜] " + dateFormat[0] + "(by: " + dateFormat[1] + ")");
                     System.out.println("Now you have " + myList.size() + " tasks in the list.");
                     FileWriting writer = new FileWriting();
                     writer.WriteFile(newDeadlineTask.toText(), true);
@@ -103,7 +103,7 @@ public class Duke {
                     myList.add(newEventTask);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(newEventTask.toString());
-                    //System.out.println("[E][✘] " + dateFormat[0] + "(at: " + dateFormat[1] + ")");
+                    //System.out.println("[E][âœ˜] " + dateFormat[0] + "(at: " + dateFormat[1] + ")");
                     System.out.println("Now you have " + myList.size() + " tasks in the list.");
                     //Write to duke.txt
                     FileWriting writer = new FileWriting();
