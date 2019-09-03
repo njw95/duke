@@ -13,25 +13,25 @@ public class FileReading extends FilePathManager {
         try {
             fr = new FileReader(file);
             br = new BufferedReader(fr);
-            ArrayList<Task> listOfTasks = new ArrayList<>();
+            ArrayList<Task> myList = new ArrayList<>();
             String bufferLine = br.readLine();
 
             while (bufferLine != null) {
                 String[] words = bufferLine.split("\\| ");
                 if (words[0].equals("D ")) { //careful of the space, must include
                     Deadline item = new Deadline(words[2], words[3], words[1].contains("1"));
-                    listOfTasks.add(item);
+                    myList.add(item);
                 } else if (words[0].equals("E ")) {
                     Event item = new Event(words[2], words[3], words[1].contains("1"));
-                    listOfTasks.add(item);
+                    myList.add(item);
                 }
                 else if (words[0].equals("T ")) {
                     ToDo item = new ToDo(words[2], words[1].contains("1"));
-                    listOfTasks.add(item);
+                    myList.add(item);
                 }
                 bufferLine = br.readLine();
             }
-            return listOfTasks;
+            return myList;
         }
         catch (IOException e) {
             e.printStackTrace();
