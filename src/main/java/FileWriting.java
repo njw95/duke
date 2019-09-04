@@ -64,7 +64,7 @@ public class FileWriting extends FilePathManager {
                 bufferLine = br.readLine();
             }
             oldCopy = oldCopy.substring(0, oldCopy.length() - 1);
-            String newContent = oldCopy.replace(toBeDeleted,"");//replace the string to be deleted with nothing
+            String newContent = oldCopy.replace(toBeDeleted,"null");//replace the string to be deleted with nothing
             FileWriting writer = new FileWriting();
             writer.WriteFile(newContent, false);
         }
