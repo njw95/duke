@@ -1,8 +1,13 @@
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.lang.Object;
+import java.text.ParseException;
+import java.util.Arrays;
 
 public class Duke {
-
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -19,10 +24,12 @@ public class Duke {
             Scanner sc = new Scanner(System.in);
             String myInput = sc.nextLine();
             String[] sep_myInput = myInput.split(" ", 2);
+
             if (myInput.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
+
             else if (sep_myInput[0].equals("list")) {
                 try {
                     if (myList.isEmpty()) throw new DukeException();
@@ -36,6 +43,7 @@ public class Duke {
                     e.emptyList();
                 }
             }
+
             else if (sep_myInput[0].equals("done")) {
                 try {
                     if ((sep_myInput.length < 2)||(Integer.parseInt(sep_myInput[1]) > myList.size())) throw new DukeException();
@@ -58,10 +66,7 @@ public class Duke {
                     //if(!(sep_myInput[1].trim().length() > 0)) throw new DukeException();//safeguard
                     ToDo newToDoTask = new ToDo(sep_myInput[1]);
                     myList.add(newToDoTask);
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(newToDoTask.toString());
-                    //System.out.println("[T][âœ˜] " + sep_myInput[1]);
-                    System.out.println("Now you have " + myList.size() + " task(s) in the list.");
+                    printGotIt(newToDoTask,myList.size());
                     //write to duke.txt
                     FileWriting writer = new FileWriting();
                     writer.WriteFile(newToDoTask.toText(), true);
@@ -77,16 +82,14 @@ public class Duke {
                         throw new DukeException();
                     }
                     //check dateFormat
-                    String[] dateFormat = sep_myInput[1].split("/by ");
+                    String[] dateFormat = sep_myInput[1].split("/by "); //description and date+time
                     if (dateFormat.length < 2) throw new DukeException();
                     Datentime dnt = new Datentime();
                     dateFormat[1]=dnt.extractDnT(dateFormat[1]);
                     if(dateFormat[1].equals("null")) throw new DukeException();
                     Deadline newDeadlineTask = new Deadline(dateFormat[0], dateFormat[1]);
                     myList.add(newDeadlineTask);
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(newDeadlineTask.toString());
-                    System.out.println("Now you have " + myList.size() + " tasks in the list.");
+                    printGotIt(newDeadlineTask,myList.size());
                     FileWriting writer = new FileWriting();
                     writer.WriteFile(newDeadlineTask.toText(), true);
                 } catch (DukeException e) {
@@ -95,7 +98,8 @@ public class Duke {
             }
             else if (sep_myInput[0].equals("event")) {
                 try {
-                    if ((sep_myInput.length < 2) || !(sep_myInput[1].trim().length() > 0)) throw new DukeException();
+                    if ((sep_myInput.length < 2))throw new DukeException();
+                    //if!(sep_myInput[1].trim().length() > 0)) throw new DukeException();
                     if (!sep_myInput[1].contains("/at")) throw new DukeException();
                     String[] dateFormat = sep_myInput[1].split("/at ");
                     if (dateFormat.length < 2) throw new DukeException();
@@ -104,9 +108,7 @@ public class Duke {
                     if(dateFormat[1].equals("null")) throw new DukeException();
                     Event newEventTask = new Event(dateFormat[0], dateFormat[1]);
                     myList.add(newEventTask);
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(newEventTask.toString());
-                    System.out.println("Now you have " + myList.size() + " tasks in the list.");
+                    printGotIt(newEventTask,myList.size());
                     //Write to duke.txt
                     FileWriting writer = new FileWriting();
                     writer.WriteFile(newEventTask.toText(), true);
@@ -114,6 +116,45 @@ public class Duke {
                     e.incorrectInputFormat(DukeException.typesOfError.EVENT);
                 }
             }
+
+            else if (sep_myInput[0].equals("delete")) {
+                try {
+                    if ((sep_myInput.length < 2)||Integer.parseInt(sep_myInput[1]) > myList.size())throw new DukeException();
+                    //if!(sep_myInput[1].trim().length() > 0)) throw new DukeException(); //safeguard
+                    String dataToDelete = myList.get(Integer.parseInt(sep_myInput[1]) - 1).toText();
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(myList.get(Integer.parseInt(sep_myInput[1]) - 1).toString());//print String
+                    FileWriting writer = new FileWriting();
+                    writer.removefromFile(dataToDelete); //remove from file
+                } catch (DukeException e) {
+                    e.incorrectInputFormat(DukeException.typesOfError.DELETE);
+                }
+            }
+            else if (sep_myInput[0].equals("find")) {
+                try {
+                    if ((sep_myInput.length < 2)) throw new DukeException(); //at least 2 words "find something"
+                    //!(sep_myInput[1].trim().length() > 0)) throw new DukeException();//safeguard
+                    ArrayList<Task> result = new ArrayList<>();
+                    for (Task task : myList) {
+                        String[] descriptionSplit = task.getDescription().split(" ");
+                        if (Arrays.asList(descriptionSplit).contains(sep_myInput[1])) { //using the array as a list, find "something"
+                            result.add(task); //any description with the "something" will be added into result
+                        }
+                    }
+                    if (result.size() > 0) {
+                        System.out.println("Here are the matching tasks in your list:");
+                        int index = 0;
+                        for (Task task : result) { //for all task in result arrayList
+                            System.out.println((++index) + ". " + task.toString()); //print
+                        }
+                    } else if(result.isEmpty()){
+                        System.out.println("Nothing was found with that keyword.");
+                    }
+                }  //end try
+                catch (DukeException e) {
+                    e.incorrectInputFormat(DukeException.typesOfError.FIND);
+                }//end catch
+            }//end find function
             else {
                 try {
                     throw new DukeException();
@@ -121,9 +162,11 @@ public class Duke {
                     e.invalidInstruction();
                 }
             }
-        }
-
+        }//end while
+    }
+    public static void printGotIt(Task currentTask, int sizeOfList){
+        System.out.println("Got it. I've added this task:");
+        System.out.println(currentTask.toString());
+        System.out.println("Now you have " + sizeOfList + " task(s) in the list.");
     }
 }
-
-
