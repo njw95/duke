@@ -1,7 +1,4 @@
-T | 0 | homework
-
-D | 1 | sally | 5th of May 2015, 11.59pm
-E | 0 | project meeting | 5th of May 2019, 11.59pm
-
+D | 1 | fly kite | 5th of May 2019
+T | 0 | read book
+T | 0 | draw book
 
-D | 0 | math homework | 5th of October 2015
