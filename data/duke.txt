@@ -1,7 +1,4 @@
-D | 1 | return car | 2nd of December 2019, 9.00am
-E | 1 | return book | 3rd of March 1800, 12.00pm
-
-
-D | 1 | pokemon | 03rd of March 1999, 12.35pm
-D | 1 | pokemon go | 3rd of March 1999, 11.59pm
+D | 1 | fly kite | 5th of May 2019
+T | 0 | read book
+T | 0 | draw book
 
