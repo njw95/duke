@@ -1,13 +1,38 @@
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.lang.Object;
-import java.text.ParseException;
-import java.util.Arrays;
-
 public class Duke {
+
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Duke(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        tasks = new TaskList(storage.readFile()); //read file from the FILEPATH into a TaskList and pass it to tasks
+    }
+
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                if(fullCommand == "") {
+                    throw new DukeException(DukeException.typesOfError.INVALID_COMMAND);
+                }
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (DukeException e) {
+                e.printError();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new Duke("C:\\Users\\Jian Wei\\Desktop\\duke\\data\\duke.txt").run();
+    }
+}
+/*
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -48,11 +73,11 @@ public class Duke {
                 try {
                     if ((sep_myInput.length < 2)||(Integer.parseInt(sep_myInput[1]) > myList.size())) throw new DukeException();
                     //if(!(sep_myInput[1].trim().length() > 0)) throw new DukeException(); //safeguard statement might need to enable later
-                    String prevData = myList.get(Integer.parseInt(sep_myInput[1])- 1).toText();
+                    String prevData = myList.get(Integer.parseInt(sep_myInput[1])- 1).toTextFile();
                     myList.get(Integer.parseInt(sep_myInput[1])-1).markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("[" + myList.get(Integer.parseInt(sep_myInput[1]) - 1).getStatusIcon() + "] " + myList.get(Integer.parseInt(sep_myInput[1]) - 1).description);
-                    String currData = myList.get(Integer.parseInt(sep_myInput[1]) - 1).toText();
+                    String currData = myList.get(Integer.parseInt(sep_myInput[1]) - 1).toTextFile();
                     //Modify Duke.txt
                     FileWriting writer = new FileWriting();
                     writer.ModifyFile(prevData, currData);
@@ -69,7 +94,7 @@ public class Duke {
                     printGotIt(newToDoTask,myList.size());
                     //write to duke.txt
                     FileWriting writer = new FileWriting();
-                    writer.WriteFile(newToDoTask.toText(), true);
+                    writer.writeToFile(newToDoTask.toTextFile(), true);
                 } catch (DukeException e) {
                     e.incorrectInputFormat(DukeException.typesOfError.TODO);
                 }
@@ -91,7 +116,7 @@ public class Duke {
                     myList.add(newDeadlineTask);
                     printGotIt(newDeadlineTask,myList.size());
                     FileWriting writer = new FileWriting();
-                    writer.WriteFile(newDeadlineTask.toText(), true);
+                    writer.writeToFile(newDeadlineTask.toTextFile(), true);
                 } catch (DukeException e) {
                     e.incorrectInputFormat(DukeException.typesOfError.DEADLINE);
                 }
@@ -111,7 +136,7 @@ public class Duke {
                     printGotIt(newEventTask,myList.size());
                     //Write to duke.txt
                     FileWriting writer = new FileWriting();
-                    writer.WriteFile(newEventTask.toText(), true);
+                    writer.writeToFile(newEventTask.toTextFile(), true);
                 } catch (DukeException e) {
                     e.incorrectInputFormat(DukeException.typesOfError.EVENT);
                 }
@@ -121,7 +146,7 @@ public class Duke {
                 try {
                     if ((sep_myInput.length < 2)||Integer.parseInt(sep_myInput[1]) > myList.size())throw new DukeException();
                     //if!(sep_myInput[1].trim().length() > 0)) throw new DukeException(); //safeguard
-                    String dataToDelete = myList.get(Integer.parseInt(sep_myInput[1]) - 1).toText();
+                    String dataToDelete = myList.get(Integer.parseInt(sep_myInput[1]) - 1).toTextFile();
                     System.out.println("Noted. I've removed this task:");
                     System.out.println(myList.get(Integer.parseInt(sep_myInput[1]) - 1).toString());//print String
                     FileWriting writer = new FileWriting();
@@ -169,4 +194,4 @@ public class Duke {
         System.out.println(currentTask.toString());
         System.out.println("Now you have " + sizeOfList + " task(s) in the list.");
     }
-}
+}*/
